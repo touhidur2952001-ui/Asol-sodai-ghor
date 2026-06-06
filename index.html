@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আসল সদাই ঘর - আসল পণ্যের বিশ্বস্ত ঠিকানা</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: #f8fafc; }
+        .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 25px 15px; text-align: center; }
+        .header h1 { font-size: 30px; margin-bottom: 5px; }
+        .header p { font-size: 14px; opacity: 0.9; }
+        
+        .search-section { background: white; padding: 20px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 98; }
+        .search-container { max-width: 700px; margin: 0 auto; position: relative; }
+        #searchInput { width: 100%; padding: 14px 50px 14px 20px; font-size: 16px; border: 2px solid #16a34a; border-radius: 50px; outline: none; }
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; }
+        
+        .cart-icon { position: fixed; top: 15px; right: 15px; background: #f97316; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; cursor: pointer; z-index: 200; box-shadow: 0 4px 15px rgba(249,115,22,0.4); }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #dc2626; color: white; width: 24px; height: 24px; border-radius: 50%; font-size: 13px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .nav { background: white; padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow-x: auto; }
+        .nav-links { max-width: 1200px; margin: 0 auto; display: flex; justify-content: flex-start; gap: 10px; padding: 0 15px; white-space: nowrap; }
+        .nav-links a { color: #333; text-decoration: none; font-weight: bold; padding: 8px 16px; border-radius: 20px; background: #f3f4f6; font-size: 14px; }
+        .nav-links a:hover { background: #16a34a; color: white; }
+        
+        .container { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
+        .bkash { background: linear-gradient(135deg, #e2136e, #be185d); padding: 15px; border-radius: 12px; margin-bottom: 25px; text-align: center; color: white; box-shadow: 0 4px 10px rgba(226,19,110,0.3); }
+        
+        .category { margin-bottom: 45px; scroll-margin-top: 100px; }
+        .category-title { font-size: 22px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid #16a34a; display: inline-block; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; transition: 0.3s; }
+        .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
+        .card.hide { display: none; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 14px; }
+        .card h3 { font-size: 16px; margin-bottom: 6px; }
+        .card p { color: #666; font-size: 13px; margin-bottom: 10px; min-height: 36px; }
+        .price { font-size: 20px; font-weight: bold; color: #16a34a; margin-bottom: 10px; }
+        
+        .stock-info { margin-bottom: 10px; padding: 6px; border-radius: 6px; font-size: 13px; text-align: center; font-weight: bold; }
+        .stock-available { background: #dcfce7; color: #16a34a; }
+        .stock-low { background: #fef3c7; color: #d97706; }
+        .stock-out { background: #fee2e2; color: #dc2626; }
+        
+        .btn-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .btn-add { flex: 1; background: #16a34a; color: white; text-align: center; padding: 9px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-add:hover { background: #15803d; }
+        .btn-add:disabled { background: #9ca3af; cursor: not-allowed; }
+        .btn-buy { flex: 1; background: #f97316; color: white; text-align: center; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; }
+        .btn-buy:hover { background: #ea580c; }
+        .btn-buy.disabled { background: #9ca3af; pointer-events: none; }
+        
+        .comment-section { border-top: 1px solid #e5e7eb; padding-top: 10px; margin-top: 10px; }
+        .comment-box { width: 100%; padding: 7px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px; font-family: inherit; resize: none; }
+        .comment-btn { background: #3b82f6; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 12px; margin-top: 5px; cursor: pointer; }
+        .comments-list { margin-top: 8px; max-height: 100px; overflow-y: auto; }
+        .comment { background: #f3f4f6; padding: 6px; border-radius: 6px; margin-bottom: 5px; font-size: 12px; }
+        .comment strong { color: #16a34a; }
+        
+        .footer { background: #1e293b; color: white; text-align: center; padding: 30px 15px; margin-top: 40px; }
+        .no-result { text-align: center; padding: 40px; color: #666; font-size: 18px; display: none; }
+        
+        .cart-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; max-width: 420px; height: 100%; background: white; box-shadow: -4px 0 12px rgba(0,0,0,0.2); z-index: 300; overflow-y: auto; }
+        .cart-modal.active { display: block; }
+        .cart-header { background: #16a34a; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; }
+        .cart-close { font-size: 32px; cursor: pointer; line-height: 1; }
+        .cart-body { padding: 15px; }
+        .cart-item { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid #e5e7eb; }
+        .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+        .cart-item-price { color: #16a34a; font-weight: bold; font-size: 15px; }
+        .cart-item-remove { color: #dc2626; cursor: pointer; font-size: 12px; }
+        .cart-total { padding: 20px; border-top: 2px solid #16a34a; font-size: 20px; font-weight: bold; position: sticky; bottom: 70px; background: white; }
+        .checkout-btn { width: calc(100% - 30px); margin: 0 15px 15px; background: #f97316; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; position: sticky; bottom: 15px; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 299; }
+        .overlay.active { display: block; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+    <div class="cart-icon" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <div class="header">
+        <h1>আসল সদাই ঘর</h1>
+        <p>১০০% আসল পণ্যের নিশ্চয়তা</p>
+    </div>
+
+    <div class="search-section">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="প্রোডাক্ট খুঁজুন... যেমন: মধু, আতর, স্মার্ট ওয়াচ">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-links">
+            <a href="#organic">অর্গানিক ফুড</a>
+            <a href="#islamic">ইসলামিক আইটেম</a>
+            <a href="#fashion">ফ্যাশন & বিউটি</a>
+            <a href="#cosmetics">কসমেটিক্স</a>
+            <a href="#electronics">ইলেকট্রনিক্স</a>
+            <a href="#grocery">গ্রোসারি স্টোর</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="bkash">
+            <strong>bKash পেমেন্ট: 01774130764</strong><br>
+            <small>সেন্ড মানি করে স্ক্রিনশট WhatsApp করুন: 01774130764</small>
+        </div>
+
+        <div class="no-result" id="noResult">কোনো প্রোডাক্ট পাওয়া যায়নি 😢</div>
+
+        <!-- 1. অর্গানিক ফুড -->
+        <div class="category" id="organic">
+            <h2 class="category-title">অর্গানিক ফুড</h2>
+            <div class="products">
+                <div class="card" data-name="খাঁটি মধু" data-price="850" data-stock="20" data-img="https://via.placeholder.com/400x400.png?text=Honey">
+                    <img src="https://via.placeholder.com/400x400.png?text=Honey" alt="Honey">
+                    <div class="card-body">
+                        <h3>খাঁটি মধু</h3>
+                        <p>সুন্দরবনের চাক ভাঙা মধু, ১ কেজি</p>
+                        <div class="price">৳ 850</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">20</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-name="গাওয়া ঘি" data-price="1200" data-stock="12" data-img="https://via.placeholder.com/400x400.png?text=Ghee">
+                    <img src="https://via.placeholder.com/400x400.png?text=Ghee" alt="Ghee">
+                    <div class="card-body">
+                        <h3>গাওয়া ঘি</h3>
+                        <p>দেশি গরুর দুধের খাঁটি ঘি, ৫০০ গ্রাম</p>
+                        <div class="price">৳ 1200</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">12</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ইসলামিক আইটেম -->
+        <div class="category" id="islamic">
+            <h2 class="category-title">ইসলামিক আইটেম</h2>
+            <div class="products">
+                <div class="card" data-name="আতর আল-হারামাইন" data-price="450" data-stock="30" data-img="https://via.placeholder.com/400x400.png?text=Attar">
+                    <img src="https://via.placeholder.com/400x400.png?text=Attar" alt="Attar">
+                    <div class="card-body">
+                        <h3>আতর আল-হারামাইন</h3>
+                        <p>অরিজিনাল সৌদি আতর, ৮ মিলি</p>
+                        <div class="price">৳ 450</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">30</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-name="জায়নামাজ তুর্কি" data-price="850" data-stock="15" data-img="https://via.placeholder.com/400x400.png?text=Prayer+Mat">
+                    <img src="https://via.placeholder.com/400x400.png?text=Prayer+Mat" alt="Prayer Mat">
+                    <div class="card-body">
+                        <h3>জায়নামাজ তুর্কি</h3>
+                        <p>মোটা ভেলভেট, সফট ও আরামদায়ক</p>
+                        <div class="price">৳ 850</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">15</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ফ্যাশন & বিউটি -->
+        <div class="category" id="fashion">
+            <h2 class="category-title">ফ্যাশন & বিউটি</h2>
+            <div class="products">
+                <div class="card" data-name="লেডিস হ্যান্ডব্যাগ" data-price="1299" data-stock="8" data-img="https://via.placeholder.com/400x400.png?text=Handbag">
+                    <img src="https://via.placeholder.com/400x400.png?text=Handbag" alt="Handbag">
+                    <div class="card-body">
+                        <h3>লেডিস হ্যান্ডব্যাগ</h3>
+                        <p>PU লেদার, প্রিমিয়াম কোয়ালিটি</p>
+                        <div class="price">৳ 1299</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">8</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. কসমেটিক্স -->
+        <div class="category" id="cosmetics">
+            <h2 class="category-title">কসমেটিক্স</h2>
+            <div class="products">
+                <div class="card" data-name="ফেস সিরাম ভিটামিন সি" data-price="650" data-stock="25" data-img="https://via.placeholder.com/400x400.png?text=Serum">
+                    <img src="https://via.placeholder.com/400x400.png?text=Serum" alt="Serum">
+                    <div class="card-body">
+                        <h3>ফেস সিরাম ভিটামিন সি</h3>
+                        <p>স্কিন ব্রাইটনিং, 30ml</p>
+                        <div class="price">৳ 650</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">25</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ইলেকট্রনিক্স -->
+        <div class="category" id="electronics">
+            <h2 class="category-title">ইলেকট্রনিক্স</h2>
+            <div class="products">
+                <div class="card" data-name="স্মার্ট ওয়াচ T900" data-price="1499" data-stock="18" data-img="https://via.placeholder.com/400x400.png?text=Watch">
+                    <img src="https://via.placeholder.com/400x400.png?text=Watch" alt="Watch">
+                    <div class="card-body">
+                        <h3>স্মার্ট ওয়াচ T900</h3>
+                        <p>কল ধরা যায়, হার্ট রেট, ৭ দিন চার্জ</p>
+                        <div class="price">৳ 1499</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">18</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-name="ব্লুটুথ ইয়ারফোন" data-price="899" data-stock="0" data-img="https://via.placeholder.com/400x400.png?text=Earphone">
+                    <img src="https://via.placeholder.com/400x400.png?text=Earphone" alt="Earphone">
+                    <div class="card-body">
+                        <h3>ব্লুটুথ ইয়ারফোন</h3>
+                        <p>HD সাউন্ড, 20 ঘন্টা ব্যাটারি</p>
+                        <div class="price">৳ 899</div>
+                        <div class="stock-info stock-out">স্টক শেষ</div>
+                        <div class="btn-group">
+                            <button class="btn-add" disabled>Out of Stock</button>
+                            <a href="#" class="btn-buy disabled">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. গ্রোসারি স্টোর -->
+        <div class="category" id="grocery">
+            <h2 class="category-title">গ্রোসারি স্টোর</h2>
+            <div class="products">
+                <div class="card" data-name="বাসমতি চাল" data-price="180" data-stock="50" data-img="https://via.placeholder.com/400x400.png?text=Rice">
+                    <img src="https://via.placeholder.com/400x400.png?text=Rice" alt="Rice">
+                    <div class="card-body">
+                        <h3>বাসমতি চাল</h3>
+                        <p>প্রিমিয়াম কোয়ালিটি, ১ কেজি</p>
+                        <div class="price">৳ 180</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">50</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-name="সয়াবিন তেল" data-price="190" data-stock="40" data-img="https://via.placeholder.com/400x400.png?text=Oil">
+                    <img src="https://via.placeholder.com/400x400.png?text=Oil" alt="Oil">
+                    <div class="card-body">
+                        <h3>সয়াবিন তেল</h3>
+                        <p>ফ্রেশ ব্র্যান্ড, ১ লিটার</p>
+                        <div class="price">৳ 190</div>
+                        <div class="stock-info stock-available">স্টক: <span class="stock-count">40</span> টি</div>
+                        <div class="btn-group">
+                            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+                            <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+                        </div>
+                        <div class="comment-section">
+                            <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
+                            <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p><strong>যোগাযোগ: 01774130764</strong></p>
+        <p>ক্যাশ অন ডেলিভারি সারা বাংলাদেশ | ঢাকায় ২৪ ঘন্টায় ডেলিভারি</p>
+        <p style="margin-top:10px;">© 2026 আসল সদাই ঘর</p>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>আপনার কার্ট</h2>
+            <span class="cart-close" onclick="toggleCart()">×</span>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <p style="text-align:center; color:#666; padding: 20px;">কার্ট খালি</p>
+        </div>
+        <div class="cart-total">
+            মোট: ৳ <span id="cartTotal">0</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">WhatsApp এ অর্ডার করুন</button>
+    </div>
+
+    <script>
+        let cart = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAllStockStatus();
+        });
+
+        function updateAllStockStatus() {
+            document.querySelectorAll('.card').forEach(card => {
+                updateStockStatus(card);
+            });
+        }
+
+        function updateStockStatus(card) {
+            const stock = parseInt(card.getAttribute('data-stock'));
+            const stockInfo = card.querySelector('.stock-info');
+            const addBtn = card.querySelector('.btn-add');
+            const buyBtn = card.querySelector('.btn-buy');
+            
+            if (!stockInfo) return;
+            
+            if (stock === 0) {
+                stockInfo.className = 'stock-info stock-out';
+                stockInfo.textContent = 'স্টক শেষ';
+                if(addBtn) { addBtn.disabled = true; addBtn.textContent = 'Out of Stock'; }
+                if(buyBtn) buyBtn.classList.add('disabled');
+            } else if (stock <= 5) {
+                stockInfo.className = 'stock-info stock-low';
+                stockInfo.innerHTML = 'মাত্র <span class="stock-count">' + stock + '</span> টি বাকি!';
+            } else {
+                stockInfo.className = 'stock-info stock-available';
+                stockInfo.innerHTML = 'স্টক: <span class="stock-count">' + stock + '</span> টি';
+            }
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+        const categories = document.querySelectorAll('.category');
+        const noResult = document.getElementById('noResult');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const productName = card.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchText)) {
+                    card.classList.remove('hide');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hide');
+                }
+            });
+
+            categories.forEach(category => {
+                const visibleCards = category.querySelectorAll('.card:not(.hide)');
+                category.style.display = (visibleCards.length === 0 && searchText !== '') ? 'none' : 'block';
+            });
+
+            noResult.style.display = (visibleCount === 0 && searchText !== '') ? 'block' : 'none';
+        });
+
+        function addToCart(btn) {
+            const card = btn.closest('.card');
+            const name = card.getAttribute('data-name');
+            const price = parseInt(card.getAttribute('data-price'));
+            const img = card.getAttribute('data-img');
+            let stock = parseInt(card.getAttribute('data-stock'));
+            
+            if (stock <= 0) {
+                alert('দুঃখিত, এই প্রোডাক্ট স্টকে নাই!');
+                return;
+            }
+            
+            stock--;
+            card.setAttribute('data-stock', stock);
+            updateStockStatus(card);
+            
+            cart.push({ name, price, img });
+            updateCart();
+        }
+
+        function buyNow(btn) {
+            const card = btn.closest('.card');
+            const stock = parseInt(card.getAttribute('data-stock'));
+            if (stock <= 0) {
+                alert('স্টক শেষ!');
+                return;
+            }
+            const name = card.getAttribute('data-name');
+            const price = card.getAttribute('data-price');
+            const message = 'আমি ' + name + ' অর্ডার করতে চাই, দাম: ৳' + price;
+            window.open('https://wa.me/8801XXXXXXXXX?text=' + encodeURIComponent(message), '_blank');
+        }
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            cartCount.textContent = cart.length;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align:center; color:#666; padding: 20px;">কার্ট খালি</p>';
+                cartTotal.textContent = '0';
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">৳ ${item.price}</div>
+                            <div class="cart-item-remove" onclick="removeFromCart(${index})">মুছুন</div>
+                        </div>
+                    </div>
+                `;
+            });
+            cartItems.innerHTML = html;
+            cartTotal.textContent = total;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartModal').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('কার্ট খালি!');
+                return;
+            }
+            let message = 'আমি আসল সদাই ঘর থেকে এই প্রোডাক্টগুলো অর্ডার করতে চাই:%0A%0A';
+            let total = 0;
+            cart.forEach(item => {
+                message += '- ' + item.name + ' - ৳' + item.price + '%0A';
+                total += item.price;
+            });
+            message += '%0Aমোট: ৳' + total + '%0A%0Aআমার ঠিকানা: ';
+            window.open('https://wa.me/8801XXXXXXXXX?text=' + message, '_blank');
+        }
+
+        function addComment(btn) {
+            const commentBox = btn.previousElementSibling;
+            const commentText = commentBox.value.trim();
+            if (commentText === '') {
+                alert('কমেন্ট লিখুন');
+                return;
+            }
+            const commentsList = btn.nextElementSibling;
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = '<strong>কাস্টমার:</strong> ' + commentText;
+            commentsList.appendChild(commentDiv);
+            commentBox.value = '';
+        }
+    </script>
+</body>
+</html>
