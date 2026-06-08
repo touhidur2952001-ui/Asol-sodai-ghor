@@ -542,9 +542,9 @@
                 total += item.price;
             });
             message += '%0Aমোট: ৳' + total + '%0A%0Aআমার ঠিকানা: ';
-            window.open('https://wa.me/8801XXXXXXXXX?text=' + message, '_blank');
+            window.open('https://wa.me/8801774130764?text=' + message, '_blank');
         }
-
+        
         function addComment(btn) {
             const commentBox = btn.previousElementSibling;
             const commentText = commentBox.value.trim();
@@ -574,12 +574,14 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 <!--End of Tawk.to Script-->
 ‎<script>
-‎function toggleDetails(id) {
-‎  var x = document.getElementById(id);
-‎  x.style.display = x.style.display === "none" ? "block" : "none";
-‎}
-‎</script>
-‎
-
+function toggleDetails(id) {
+  var x = document.getElementById(id);
+  if (x.style.display === "none" || x.style.display === "") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
 </body>
 </html>
