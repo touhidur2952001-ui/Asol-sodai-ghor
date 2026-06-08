@@ -151,7 +151,19 @@
                         <h3>খাঁটি মধু</h3>
                         <p>সুন্দরবনের চাক ভাঙা মধু, ১ কেজি</p>
                         <div class="price">৳ 850</div>
-                        <div class="stock-info stock-available">স্টক: <span class="stock-count">0</span> টি</div>
+‎<div style="display: flex; gap: 8px; margin: 10px 0;">
+‎  <button onclick="toggleDetails('honey-details')" 
+‎          style="background: #3b82f6; color: white; padding: 6px 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;">
+‎    Details
+‎  </button>
+‎  <div style="background: #d1fae5; color: #065f46; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; flex: 1;">
+‎    স্টক: <span class="stock-count">0</span> টি
+‎  </div>
+‎</div>
+‎<div id="honey-details" style="display: none; background: #f0f9ff; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; border-left: 3px solid #3b82f6;">
+‎  <strong>পণ্যের বিবরণ:</strong><br>
+‎  সুন্দরবনের প্রাকৃতিক চাক ভাঙা মধু। ১০০% খাঁটি ও ভেজালমুক্ত। ওজন: ১ কেজি। ফ্রিজে রাখার দরকার নাই।
+‎</div>
                         <div class="btn-group">
                             <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
                             <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
@@ -561,5 +573,13 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+‎<script>
+‎function toggleDetails(id) {
+‎  var x = document.getElementById(id);
+‎  x.style.display = x.style.display === "none" ? "block" : "none";
+‎}
+‎</script>
+‎
+
 </body>
 </html>
