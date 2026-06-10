@@ -10,7 +10,7 @@
         .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; }
         .header h1 { font-size: 30px; margin-bottom: 5px; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-.header-logo { height: 45px; width: auto; }
+     .header-logo { height: 55px; width: auto; background: white; padding: 4px; border-radius: 8px; }
         .header p { font-size: 14px; opacity: 0.9; }        
         .search-section { background: white; padding: 20px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 98; }
         .search-container { max-width: 700px; margin: 0 auto; position: relative; }
@@ -87,15 +87,13 @@
         <span class="cart-count" id="cartCount">0</span>
     </div>
     <div class="header">
-  <div class="header-left">
-    <img src="logo.png" alt="Asol Sodai Ghor" class="header-logo">
-    <div>
-      <h1>আসল সদাই ঘর</h1>
-      <p>১০০% আসল পণ্যের নিশ্চয়তা</p>
-    </div>
+  <img src="logo.png" alt="Asol Sodai Ghor" class="header-logo">
+  <div style="text-align: center; flex: 1;">
+    <h1>আসল সদাই ঘর</h1>
+    <p>১০০% আসল পণ্যের নিশ্চয়তা</p>
   </div>
-  <div class="w-10"></div> <!-- Cart আইকনের জন্য ফাঁকা জায়গা -->
-    </div>
+  <div style="width: 55px;"></div>
+</div>
     <div class="search-section">
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="প্রোডাক্ট খুঁজুন... যেমন: মধু, আতর, স্মার্ট ওয়াচ">
