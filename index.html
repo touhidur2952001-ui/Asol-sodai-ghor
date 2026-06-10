@@ -7,10 +7,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Hind Siliguri', sans-serif; background: #f8fafc; }
-        .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 25px 15px; text-align: center; }
+        .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; }
         .header h1 { font-size: 30px; margin-bottom: 5px; }
-        .header p { font-size: 14px; opacity: 0.9; }
-        
+        .header-left { display: flex; align-items: center; gap: 12px; }
+.header-logo { height: 45px; width: auto; }
+        .header p { font-size: 14px; opacity: 0.9; }        
         .search-section { background: white; padding: 20px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 98; }
         .search-container { max-width: 700px; margin: 0 auto; position: relative; }
         #searchInput { width: 100%; padding: 14px 50px 14px 20px; font-size: 16px; border: 2px solid #16a34a; border-radius: 50px; outline: none; }
@@ -85,12 +86,16 @@
         🛒
         <span class="cart-count" id="cartCount">0</span>
     </div>
-
     <div class="header">
-        <h1>আসল সদাই ঘর</h1>
-        <p>১০০% আসল পণ্যের নিশ্চয়তা</p>
+  <div class="header-left">
+    <img src="logo.png" alt="Asol Sodai Ghor" class="header-logo">
+    <div>
+      <h1>আসল সদাই ঘর</h1>
+      <p>১০০% আসল পণ্যের নিশ্চয়তা</p>
     </div>
-
+  </div>
+  <div class="w-10"></div> <!-- Cart আইকনের জন্য ফাঁকা জায়গা -->
+    </div>
     <div class="search-section">
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="প্রোডাক্ট খুঁজুন... যেমন: মধু, আতর, স্মার্ট ওয়াচ">
