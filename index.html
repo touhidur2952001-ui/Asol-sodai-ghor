@@ -10,7 +10,13 @@
         .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; }
         .header h1 { font-size: 30px; margin-bottom: 5px; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-     .header-logo { height: 55px; width: auto; background: white; padding: 4px; border-radius: 8px; }
+.header-logo { width: 54px; height: 54px; 
+  border-radius: 50%; 
+  background: linear-gradient(135deg, #ff69b4, #ff1493); 
+  padding: 8px; 
+  object-fit: contain;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
         .header p { font-size: 14px; opacity: 0.9; }        
         .search-section { background: white; padding: 20px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 98; }
         .search-container { max-width: 700px; margin: 0 auto; position: relative; }
