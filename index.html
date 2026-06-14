@@ -86,6 +86,27 @@
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 299; }
         .overlay.active { display: block; }
         html { scroll-behavior: smooth; }
+.popup {
+  display:none; 
+  position:fixed !important; 
+  z-index:99999 !important; 
+  left:0; top:0; 
+  width:100%; height:100%; 
+  background:rgba(0,0,0,0.7);
+  overflow:auto;
+}
+.popup-content {
+  background:#fff; 
+  margin:20% auto; 
+  padding:20px; 
+  width:90%; 
+  max-width:380px; 
+  border-radius:12px;
+  position:relative;
+}
+.close {float:right; font-size:28px; cursor:pointer; color:#999;}
+.close:hover {color:#000;}
+@media (max-width: 480px) {.popup-content {margin:30% auto; width:95%;}}
     </style>
 </head>
 <body>
@@ -178,7 +199,11 @@
     </div>
     <div class="btn-group">
       <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
-      <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+<button class="btn-buy" 
+onclick="event.preventDefault(); event.stopPropagation(); openPopup(80, 'রাজশাহীর হিমসাগর আম'); return false;"
+style="background:#ff6a00; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer;">
+Buy Now
+</button>
     </div>
     <div class="comment-section">
       <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
@@ -715,7 +740,63 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
     }
   });
-});
-</script>
+})}
+let currentPrice = 0;
+
+function openPopup(price, name) {
+  currentPrice = price;
+  document.getElementById('pPrice').innerText = price;
+  document.getElementById('productName').innerText = name;
+  document.getElementById('deliveryPopup').style.display = 'block';
+  calcTotal();
+}
+
+function closePopup() {
+  document.getElementById('deliveryPopup').style.display = 'none';
+}
+
+function calcTotal() {
+  let district = document.getElementById('district');
+  let dCharge = parseInt(district.value) || 120;
+  let codCharge = Math.round(currentPrice * 0.01);
+  let total = currentPrice + dCharge + codCharge;
+  
+  document.getElementById('dCharge').innerText = dCharge;
+  document.getElementById('codCharge').innerText = codCharge;
+  document.getElementById('total').innerText = total;
+}
+
+function confirmOrder() {
+  let total = document.getElementById('total').innerText;
+  let product = document.getElementById('productName').innerText;
+  let district = document.getElementById('district');
+  let districtName = district.options[district.selectedIndex].text;
+  
+  alert('✅ অর্ডার কনফার্ম!\nপ্রোডাক্ট: ' + product + '\nজেলা: ' + districtName + '\nমোট: ৳' + total + '\n\nএখন WhatsApp/ইনবক্সে নাম, ফোন, ঠিকানা দিন');
+  closePopup();
+}
+
+window.onclick = function(e) {
+  if(e.target == document.getElementById('deliveryPopup')) closePopup();
+}
+    </script>
+              <div id="deliveryPopup" class="popup">
+  <div class="popup-content">
+    <span onclick="closePopup()" class="close">&times;</span>
+    <h3 id="productName">প্রোডাক্ট নাম</h3>
+    <label>জেলা সিলেক্ট করুন:</label>
+    <select id="district" onchange="calcTotal()" style="width:100%; padding:8px; margin:10px 0;">
+      <option value="60">ঢাকা সিটি - ৳60</option>
+      <option value="120" selected>ঢাকা জেলা/সাভার/ধামরাই - ৳120</option>
+      <option value="130">অন্যান্য জেলা - ৳130</option>
+    </select>
+    <p>প্রোডাক্ট দাম: ৳<span id="pPrice">0</span></p>
+    <p>ডেলিভারি: ৳<span id="dCharge">120</span></p>
+    <p>COD চার্জ 1%: ৳<span id="codCharge">12</span></p>
+    <hr>
+    <p><b>মোট: ৳<span id="total">0</span></b></p>
+    <button onclick="confirmOrder()" style="width:100%; padding:10px; background:#16a34a; color:white; border:none; border-radius:6px;">কনফার্ম অর্ডার</button>
+  </div>
+              </div>  
 </body>
 </html>
