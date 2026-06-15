@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (stock > 0) {
       btnGroup.innerHTML = `
         <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
-        <a href="#" class="btn-buy" onclick="buyNow(this)">Buy Now</a>
+        <button class="btn-buy" onclick="event.stopPropagation(); openPopup(1000, 'রাজশাহীর হিমসাগর আম'); return false;">Buy Now</button>
       `;
     } else {
       btnGroup.innerHTML = `
@@ -772,8 +772,7 @@ function confirmOrder() {
   let product = document.getElementById('productName').innerText;
   let district = document.getElementById('district');
   let districtName = district.options[district.selectedIndex].text;
-  
-  alert('✅ অর্ডার কনফার্ম!\nপ্রোডাক্ট: ' + product + '\nজেলা: ' + districtName + '\nমোট: ৳' + total + '\n\nএখন WhatsApp/ইনবক্সে নাম, ফোন, ঠিকানা দিন');
+    alert('✅ অর্ডার কনফার্ম!\nপ্রোডাক্ট: ' + product + '\nজেলা: ' + districtName + '\nমোট: ৳' + total + '\n\nএখন WhatsApp/ইনবক্সে নাম, ফোন, ঠিকানা দিন');
   closePopup();
 }
 
