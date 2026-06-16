@@ -197,6 +197,13 @@
       <strong>পণ্যের বিবরণ:</strong><br>
       রাজশাহীর বিখ্যাত হিমসাগর আম। মুখে দিলেই মিশে যাবে। ফ্রেশ বাগান থেকে সরাসরি। ৩-৪ পিছ ১ কেজি। 
     </div>
+         <div class="btn-group">
+      <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+<button class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); openPopup(1000, 'রাজশাহীর হিমসাগর আম'); return false;"
+style="background:#ff6a00; color:white; padding:8px 12px; border:none; border-radius:6px;">
+Buy Now
+</button>
+    </div>
      <div class="comment-section">
       <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
       <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
