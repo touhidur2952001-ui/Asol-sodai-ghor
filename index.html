@@ -727,10 +727,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnGroup = card.querySelector('.btn-group');
     
     if (stock > 0) {
-      btnGroup.innerHTML = `
-        <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
-        <button class="btn-buy" onclick="event.stopPropagation(); openPopup(1000, 'রাজশাহীর হিমসাগর আম'); return false;">Buy Now</button>
-      `;
+  const priceText = card.querySelector('.price, h3 + p + p').innerText;
+  const price = parseInt(priceText.replace('৳ ', ''));
+  const name = card.querySelector('h3').innerText;
+  
+  btnGroup.innerHTML = `
+    <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+    <button class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); openPopup(${price}, '${name}'); return false;">Buy Now</button>
+  `;
+} else {
+  btnGroup.innerHTML = `<button class="btn-add" disabled style="width:100%; background:#9CA3AF; color:white; padding:12px; border:none; border-radius:6px;">Out of Stock</button>`;
+}
     } else {
       btnGroup.innerHTML = `
         <button class="btn-add" disabled style="width:100%; background:#9CA3AF; color:white; padding:12px; border:none; border-radius:6px;">
