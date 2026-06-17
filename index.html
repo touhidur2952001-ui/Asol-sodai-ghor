@@ -189,10 +189,7 @@
       <button onclick="toggleDetails(this)" style="background: #16a34a; color: white; padding: 6px 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;">
         Details
       </button>
-      <div style="background: #d1fae5; color: #065f46; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; flex: 1;">
-        স্টক: <span class="stock-count">200</span> কেজি
-      </div>
-    </div>
+      <div class="stock-info"> 200 </div>
     <div class="honey-details" style="display: none; background: #f0fdf4; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; border-left: 3px solid #16a34a;">
       <strong>পণ্যের বিবরণ:</strong><br>
       রাজশাহীর বিখ্যাত হিমসাগর আম। মুখে দিলেই মিশে যাবে। ফ্রেশ বাগান থেকে সরাসরি। ৩-৪ পিছ ১ কেজি। 
@@ -783,6 +780,60 @@ document.addEventListener('DOMContentLoaded', function() {
     updateStockStatus(card);
   });
 });
+        <script>
+// পেজ লোড হলেই সব কার্ড আপডেট করবে
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.card').forEach(card => {
+        updateStockStatus(card);
+    });
+});
+
+function updateStockStatus(card) {
+    const stock = parseInt(card.getAttribute('data-stock'));
+    const stockInfo = card.query info;
+    const btnGroup = card.querySelector('.btn-group');
+    const name = card.getAttribute('data-name');
+    const price = parseInt(card.getAttribute('data-price'));
+
+    if (!stockInfo || !btnGroup) return;
+
+    if (stock <= 0) {
+        stockInfo.className = 'stock-info stock-out';
+        stockInfo.innerHTML = 'স্টক: আউট অফ স্টক';
+        btnGroup.innerHTML = '<button class="btn-add" disabled>Out of Stock</button>';
+    } else {
+        stockInfo.className = 'stock-info stock-available';
+        stockInfo.innerHTML = `স্টক: <span class="stock-count">${stock}</span> পিস`;
+        btnGroup.innerHTML = `
+            <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+            <button class="btn-buy" onclick="openPopup(${price}, '${name}')">Buy Now</button>
+        `;
+    }
+}
+
+function addToCart(btn) {
+    const card = btn.closest('.card');
+    const name = card.getAttribute('data-name');
+    const price = parseInt(card.getAttribute('data-price'));
+    let stock = parseInt(card.getAttribute('data-stock'));
+
+    if (stock <= 0) {
+        alert('স্টক নাই ভাই!');
+        return;
+    }
+
+    stock--;
+    card.setAttribute('data-stock', stock);
+    updateStockStatus(card);
+    
+    let cartCount = document.getElementById('cartCount');
+    cartCount.textContent = parseInt(cartCount.textContent) + 1;
+    alert('✅ ' + name + ' কার্টে যোগ হলো!');
+}
+
+function openPopup(price, name) {
+    alert('Buy Now: ' + name + ' - ৳' + price + '\n\nডেলিভারি ফর্ম আসবে!');
+}
 </script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
@@ -796,24 +847,5 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-    
-              <div id="deliveryPopup" class="popup">
-  <div class="popup-content">
-    <span onclick="closePopup()" class="close">&times;</span>
-    <h3 id="productName">প্রোডাক্ট নাম</h3>
-    <label>জেলা সিলেক্ট করুন:</label>
-    <select id="district" onchange="calcTotal()" style="width:100%; padding:8px; margin:10px 0;">
-      <option value="60">ঢাকা সিটি - ৳60</option>
-      <option value="120" selected>ঢাকা জেলা/সাভার/ধামরাই - ৳120</option>
-      <option value="130">অন্যান্য জেলা - ৳130</option>
-    </select>
-    <p>প্রোডাক্ট দাম: ৳<span id="pPrice">0</span></p>
-    <p>ডেলিভারি: ৳<span id="dCharge">120</span></p>
-    <p>COD চার্জ 1%: ৳<span id="codCharge">12</span></p>
-    <hr>
-    <p><b>মোট: ৳<span id="total">0</span></b></p>
-    <button onclick="confirmOrder()" style="width:100%; padding:10px; background:#16a34a; color:white; border:none; border-radius:6px;">কনফার্ম অর্ডার</button>
-  </div>
-              </div>  
-</body>
+ </body>
 </html>
