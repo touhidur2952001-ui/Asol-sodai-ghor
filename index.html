@@ -176,25 +176,26 @@
                 <div class="category" id="organic">
             <h2 class="category-title">অর্গানিক ফুড</h2>
             <div class="products">
-              <div class="card" data-name="হিমসাগর আম" data-price="1000" data-stock="200" data-img="himsagor.jpg">
-  <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <div class="card" data-name="রাজশাহীর হিমসাগর আম" data-price="1000" data-stock="200">
   <img src="himsagorkacha.jpg" alt="হিমসাগর আম কাঁচা" style="width: 50%; height: 200px; object-fit: cover; border-radius: 8px;">
   <img src="himsagorpaka.jpg" alt="হিমসাগর আম পাকা" style="width: 50%; height: 200px; object-fit: cover; border-radius: 8px;">
-</div>
   <div class="card-body">
     <h3>রাজশাহীর হিমসাগর আম</h3>
     <p>রসে ভরা, আঁশ নাই, 100% কার্বাইড মুক্ত, 12 কেজি</p>
     <div class="price">৳ 1000</div>
+
+      
+    <div class="stock-info"></div>
+    <div class="btn-group"></div>
+      </div>
     <div style="display: flex; gap: 8px; margin: 10px 0;">
       <button onclick="toggleDetails(this)" style="background: #16a34a; color: white; padding: 6px 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;">
         Details
       </button>
-      <div class="stock-info"> 200 </div>
     <div class="honey-details" style="display: none; background: #f0fdf4; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; border-left: 3px solid #16a34a;">
       <strong>পণ্যের বিবরণ:</strong><br>
       রাজশাহীর বিখ্যাত হিমসাগর আম। মুখে দিলেই মিশে যাবে। ফ্রেশ বাগান থেকে সরাসরি। ৩-৪ পিছ ১ কেজি। 
     </div>
-<div class="btn-group"></div>
      <div class="comment-section">
       <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
       <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
@@ -213,15 +214,15 @@
 ‎          style="background: #3b82f6; color: white; padding: 6px 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; flex: 1;">
 ‎    Details
 ‎  </button>
-‎  <div style="background: #d1fae5; color: #065f46; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; flex: 1;">
-‎    স্টক: <span class="stock-count">0</span> টি
-‎  </div>
+
+    
+‎  <div class="stock-info"></div>
+<div class="btn-group"></div>
 ‎</div>
 ‎<div class="honey-details" style="display: none; background: #f0f9ff; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; text-align: left; border-left: 3px solid #3b82f6;">
 ‎  <strong>পণ্যের বিবরণ:</strong><br>
 ‎  সুন্দরবনের প্রাকৃতিক চাক ভাঙা মধু। ১০০% খাঁটি ও ভেজালমুক্ত। ওজন: ১ কেজি। ফ্রিজে রাখার দরকার নাই।
 ‎</div>
-                        <div class="btn-group"></div>
                         <div class="comment-section">
                             <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
                             <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
@@ -523,7 +524,6 @@
         </div>
         <button class="checkout-btn" onclick="checkout()">WhatsApp এ অর্ডার করুন</button>
     </div>
-
     <script>
         let cart = [];
         
@@ -846,6 +846,27 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+</script>
+                            <script>
+window.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.card').forEach(card => {
+    const stock = parseInt(card.dataset.stock);
+    const stockInfo = card.querySelector('.stock-info');
+    const btnGroup = card.querySelector('.btn-group');
+    const name = card.dataset.name;
+    const price = card.dataset.price;
+
+    if(stock <= 0) {
+      stockInfo.className = 'stock-info stock-out';
+      stockInfo.innerText = 'স্টক: আউট অফ স্টক';
+      btnGroup.innerHTML = '<button class="btn-add" disabled>Out of Stock</button>';
+    } else {
+      stockInfo.className = 'stock-info stock-available';
+      stockInfo.innerText = 'স্টক: ' + stock + ' পিস';
+      btnGroup.innerHTML = '<button class="btn-add">Add to Cart</button><button class="btn-buy">Buy Now</button>';
+    }
+  });
+});
 </script>
  </body>
 </html>
