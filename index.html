@@ -197,13 +197,7 @@
       <strong>পণ্যের বিবরণ:</strong><br>
       রাজশাহীর বিখ্যাত হিমসাগর আম। মুখে দিলেই মিশে যাবে। ফ্রেশ বাগান থেকে সরাসরি। ৩-৪ পিছ ১ কেজি। 
     </div>
-         <div class="btn-group">
-      <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
-<button class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); openPopup(1000, 'রাজশাহীর হিমসাগর আম'); return false;"
-style="background:#ff6a00; color:white; padding:8px 12px; border:none; border-radius:6px;">
-Buy Now
-</button>
-    </div>
+<div class="btn-group"></div>
      <div class="comment-section">
       <textarea class="comment-box" placeholder="রিভিউ লিখুন..." rows="2"></textarea>
       <button class="comment-btn" onclick="addComment(this)">কমেন্ট করুন</button>
@@ -596,16 +590,23 @@ Buy Now
         });
 
         function addToCart(btn) {
-            const card = btn.closest('.card');
-            const name = card.getAttribute('data-name');
-            const price = parseInt(card.getAttribute('data-price'));
-            const img = card.getAttribute('data-img');
-            let stock = parseInt(card.getAttribute('data-stock'));
-            
-            if (stock <= 0) {
-                alert('দুঃখিত, এই প্রোডাক্ট স্টকে নাই!');
-                return;
-            }
+    const card = btn.closest('.card');
+    const name = card.getAttribute('data-name');
+    const price = parseInt(card.getAttribute('data-price'));
+    const img = card.getAttribute('data-img');
+    let stock = parseInt(card.getAttribute('data-stock'));
+
+    if (stock <= 0) {
+        alert('সরি ভাই, এই প্রোডাক্ট স্টক আউট!');
+        return;
+    }
+    stock--;
+    card.setAttribute('data-stock', stock);
+    updateStockStatus(card);
+    cart.push({ name, price, img });
+    updateCart();
+    alert(name + ' কার্টে যোগ হইছে!');
+}
             
             stock--;
             card.setAttribute('data-stock', stock);
@@ -727,15 +728,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnGroup = card.querySelector('.btn-group');
     
     if (stock > 0) {
-  const priceText = card.querySelector('.price, h3 + p + p').innerText;
+  const priceText = card.querySelector('.price').innerText;
   const price = parseInt(priceText.replace('৳ ', ''));
   const name = card.querySelector('h3').innerText;
   
   btnGroup.innerHTML = `
     <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
     <button class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); openPopup(${price}, '${name}'); return false;">Buy Now</button>
-} else {
-  btnGroup.innerHTML = `<button class="btn-add" disabled style="width:100%; background:#9CA3AF; color:white; padding:12px; border:none; border-radius:6px;">Out of Stock</button>`;
+ else {btnGroup.innerHTML = `<button class="btn-add" disabled style="width:100%; background:#9CA3AF; color:white; padding:12px; border:none; border-radius:6px;">Out of Stock</button>`;
     }
   });
 })}
@@ -771,7 +771,7 @@ function confirmOrder() {
   let product = document.getElementById('productName').innerText;
   let district = document.getElementById('district');
   let districtName = district.options[district.selectedIndex].text;
-    alert('✅ অর্ডার কনফার্ম!\nপ্রোডাক্ট: ' + product + '\nজেলা: ' + districtName + '\nমোট: ৳' + total + '\n\nএখন WhatsApp/ইনবক্সে নাম, ফোন, ঠিকানা দিন');
+    alert('✅ অর্ডার কনফার্ম!\nপণ্য: ' + product + '\nমোট: ৳' + total + '\n\nএখন WhatsApp ওপেন হবে। সেন্ড চাপো।');
   closePopup();
 }
 
