@@ -651,102 +651,90 @@
                         <img src="${item.img}" alt="${item.name}">
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">৳ ${item.price}</div>
-                            <div class="cart-item-remove" onclick="removeFromCart(${index})">মুছুন</div>
-                        </div>
-                    </div>
-                `;
-            });
-            cartItems.innerHTML = html;
-            cartTotal.textContent = total;
-        }
+<script>
+let cart = [];
+let currentPrice = 0;
+let currentName = '';
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function toggleCart() {
-            document.getElementById('cartModal').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('কার্ট খালি!');
-                return;
-            }
-            let message = 'আমি আসল সদাই ঘর থেকে এই প্রোডাক্টগুলো অর্ডার করতে            let total = 0;
-            cart.forEach(item => {
-                message += '- ' + item.name + ' - ৳' + item.price + '%0A';
-                total += item.price;
-            });
-            message += '%0Aমোট: ৳' + total + '%0A%0Aআমার ঠিকানা: ';
-            window.open('https://wa.me/8801774130764?text=' + message, '_blank');
-        }
-        
-        function addComment(btn) {
-            const commentBox = btn.previousElementSibling;
-            const commentText = commentBox.value.trim();
-            if (commentText === '') {
-                alert('কমেন্ট লিখুন');
-                return;
-            }
-            const commentsList = btn.nextElementSibling;
-            const commentDiv = document.createElement('div');
-            commentDiv.className = 'comment';
-            commentDiv.innerHTML = '<strong>কাস্টমার:</strong> ' + commentText;
-            commentsList.appendChild(commentDiv);
-            commentBox.value = '';
-        }
-    </script>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a23f3dc062e4c1c29808781/1jqe7165o';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-    <script>
-  function toggleDetails(btn) {
-  var x = btn.closest('.card').querySelector('.honey-details');
-  if (x.style.display === "none" || x.style.display === "") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
+function toggleDetails(btn) {
+  let details = btn.closest('.card-body').querySelector('.honey-details');
+  if(details) {
+    details.style.display = details.style.display === 'none' ? 'block' : 'none';
   }
 }
-// স্টক অনুযায়ী বাটন চেঞ্জ করার কোড
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.card').forEach(card => {
-    const stock = Number(card.dataset.stock);
-    const btnGroup = card.querySelector('.btn-group');
-    
-    if (stock > 0) {
-  const priceText = card.querySelector('.price').innerText;
-  const price = parseInt(priceText.replace('৳ ', ''));
-  const name = card.querySelector('h3').innerText;
+
+function addComment(btn) {
+  let commentBox = btn.previousElementSibling;
+  let commentText = commentBox.value.trim();
+  if(commentText === '') {
+    alert('কমেন্ট লিখো ভাই!');
+    return;
+  }
+  let commentsList = btn.nextElementSibling;
+  let commentDiv = document.createElement('div');
+  commentDiv.className = 'comment';
+  commentDiv.innerHTML = '<strong>আপনি:</strong> ' + commentText;
+  commentsList.appendChild(commentDiv);
+  commentBox.value = '';
+}
+
+// স্টক + বাটন অটো জেনারেট - এটাই মেইন ফাংশন
+function updateStockStatus(card) {
+  const stock = parseInt(card.getAttribute('data-stock'));
+  const stockInfo = card.querySelector('.stock-info');
+  const btnGroup = card.querySelector('.btn-group');
+  const name = card.getAttribute('data-name');
+  const price = parseInt(card.getAttribute('data-price'));
+
+  if (!stockInfo || !btnGroup) return;
+
+  if (stock <= 0) {
+    stockInfo.className = 'stock-info stock-out';
+    stockInfo.innerHTML = 'স্টক: আউট অফ স্টক';
+    btnGroup.innerHTML = '<button class="btn-add" disabled>Out of Stock</button>';
+  } else if (stock <= 5) {
+    stockInfo.className = 'stock-info stock-low';
+    stockInfo.innerHTML = `স্টক: মাত্র <span class="stock-count">${stock}</span> পিস বাকি!`;
+    btnGroup.innerHTML = `
+      <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+      <button class="btn-buy" onclick="openPopup(${price}, '${name}')">Buy Now</button>
+    `;
+  } else {
+    stockInfo.className = 'stock-info stock-available';
+    stockInfo.innerHTML = `স্টক: <span class="stock-count">${stock}</span> পিস`;
+    btnGroup.innerHTML = `
+      <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
+      <button class="btn-buy" onclick="openPopup(${price}, '${name}')">Buy Now</button>
+    `;
+  }
+}
+
+function addToCart(btn) {
+  const card = btn.closest('.card');
+  const name = card.getAttribute('data-name');
+  const price = parseInt(card.getAttribute('data-price'));
+  const img = card.getAttribute('data-img');
+  let stock = parseInt(card.getAttribute('data-stock'));
+
+  if (stock <= 0) {
+    alert('সরি ভাই, এই প্রোডাক্ট স্টক আউট!');
+    return;
+  }
+
+  stock--;
+  card.setAttribute('data-stock', stock);
+  updateStockStatus(card);
   
-  btnGroup.innerHTML = `
-    <button class="btn-add" onclick="addToCart(this)">Add to Cart</button>
-    <button class="btn-buy" onclick="event.preventDefault(); event.stopPropagation(); openPopup(${price}, '${name}'); return false;">Buy Now</button>
- else {btnGroup.innerHTML = `<button class="btn-add" disabled style="width:100%; background:#9CA3AF; color:white; padding:12px; border:none; border-radius:6px;">Out of Stock</button>`;
-    }
-  });
-})}
-    </script>
-        <script>
-let currentPrice = 0;
+  cart.push({ name, price, img });
+  document.getElementById('cartCount').textContent = cart.length;
+  alert('✅ ' + name + ' কার্টে যোগ হইছে!');
+}
 
 function openPopup(price, name) {
   currentPrice = price;
-  document.getElementById('pPrice').innerText = price;
-  document.getElementById('productName').innerText = name;
+  currentName = name;
+  document.getElementById('pPrice').textContent = price;
+  document.getElementById('productName').textContent = name;
   document.getElementById('deliveryPopup').style.display = 'block';
   calcTotal();
 }
@@ -761,24 +749,54 @@ function calcTotal() {
   let codCharge = Math.round(currentPrice * 0.01);
   let total = currentPrice + dCharge + codCharge;
   
-  document.getElementById('dCharge').innerText = dCharge;
-  document.getElementById('codCharge').innerText = codCharge;
-  document.getElementById('total').innerText = total;
+  document.getElementById('dCharge').textContent = dCharge;
+  document.getElementById('codCharge').textContent = codCharge;
+  document.getElementById('total').textContent = total;
 }
 
 function confirmOrder() {
-  let total = document.getElementById('total').innerText;
-  let product = document.getElementById('productName').innerText;
+  let name = document.getElementById('cName').value.trim();
+  let phone = document.getElementById('cPhone').value.trim();
+  let address = document.getElementById('cAddress').value.trim();
   let district = document.getElementById('district');
   let districtName = district.options[district.selectedIndex].text;
-    alert('✅ অর্ডার কনফার্ম!\nপণ্য: ' + product + '\nমোট: ৳' + total + '\n\nএখন WhatsApp ওপেন হবে। সেন্ড চাপো।');
+  let total = document.getElementById('total').innerText;
+
+  if (!name || !phone || !address) {
+    alert('⚠️ নাম, ফোন, ঠিকানা সব ফিল্ড পূরণ করুন');
+    return;
+  }
+
+  let message = `🛒 নতুন অর্ডার\nপ্রোডাক্ট: ${currentName}\nমোট: ৳${total}\n\nনাম: ${name}\nফোন: ${phone}\nজেলা: ${districtName}\nঠিকানা: ${address}`;
+  window.open('https://wa.me/8801774130764?text=' + encodeURIComponent(message), '_blank');
   closePopup();
+  alert('✅ অর্ডার কনফার্ম! WhatsApp ওপেন হয়েছে। এখন সেন্ড চাপুন');
 }
 
 window.onclick = function(e) {
-  if(e.target == document.getElementById('deliveryPopup')) closePopup();
+  if (e.target == document.getElementById('deliveryPopup')) closePopup();
 }
-    </script>
+
+// পেজ লোড হওয়ার পর সব কার্ড আপডেট করো
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.card').forEach(card => {
+    updateStockStatus(card);
+  });
+});
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a23f3dc062e4c1c29808781/1jqe7165o';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+    
               <div id="deliveryPopup" class="popup">
   <div class="popup-content">
     <span onclick="closePopup()" class="close">&times;</span>
