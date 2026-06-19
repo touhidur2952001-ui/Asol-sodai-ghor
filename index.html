@@ -614,7 +614,9 @@ window.onclick = function(e) {
 }
 
 function toggleDetails(btn) {
-  const detailsDiv = btn.nextElementSibling;
+  const card = btn.closest('.card');
+  const detailsDiv = card.querySelector('.honey-details'); // সরাসরি class দিয়ে ধরো
+  
   if(detailsDiv.style.display === 'none' || detailsDiv.style.display === '') {
     detailsDiv.style.display = 'block';
     btn.innerText = 'Hide Details';
