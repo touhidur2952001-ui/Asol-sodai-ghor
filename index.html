@@ -545,9 +545,7 @@ function updateStockStatus(card) {
   } else {
     stockInfo.className = 'stock-info stock-available';
     stockInfo.innerText = 'স্টক: ' + stock + ' পিস';
-    btnGroup.innerHTML = '<button class="btn-add" onclick="addToCart(this)">Add to Cart</button><button class="btn-buy" onclick="openPopup('+price+', \''+name+'\')">Buy Now</button>';
-  }
-}
+    btnGroup.innerHTML = '<button class="btn-add" onclick="addToCart(this)" style="padding:6px 8px; font-size:12px; flex:1;">Add to Cart</button><button class="btn-buy" onclick="openPopup('+price+', \''+name+'\')" style="padding:6px 8px; font-size:12px; flex:1;">Buy Now</button>';
 
 function addToCart(btn) {
   const card = btn.closest('.card');
