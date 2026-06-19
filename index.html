@@ -547,8 +547,7 @@ if (!btnGroup) return;  // btnGroup না থাকলেও বাকি ক�
   } else {
     stockInfo.className = 'stock-info stock-available';
     stockInfo.innerText = 'স্টক: ' + stock + ' পিস';
-    btnGroup.innerHTML = '<button class="btn-add" onclick="addToCart(this)" style="padding:6px 8px; font-size:12px; flex:1;">Add to Cart</button><button class="btn-buy" onclick="openPopup('+price+', \''+name+'\')" style="padding:6px 8px; font-size:12px; flex:1;">Buy Now</button>';
-
+btnGroup.innerHTML = '<button class="btn-add">Add to Cart</button><button class="btn-buy">Buy Now</button>';
 function addToCart(btn) {
   const card = btn.closest('.card');
   let stock = parseInt(card.getAttribute('data-stock'));
