@@ -107,6 +107,11 @@
 .close {float:right; font-size:28px; cursor:pointer; color:#999;}
 .close:hover {color:#000;}
 @media (max-width: 480px) {.popup-content {margin:30% auto; width:95%;}}
+  .btn-group button {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 12px;
+} 
     </style>
 </head>
 <body>
@@ -535,7 +540,10 @@ function updateStockStatus(card) {
   const name = card.getAttribute('data-name');
   const price = parseInt(card.getAttribute('data-price'));
 
-  if (!stockInfo || !btnGroup) return;
+  const stockInfo = card.querySelector('.stock-info');
+const btnGroup = card.querySelector('.btn-group');
+if (!stockInfo) return;
+if (!btnGroup) return;  // btnGroup না থাকলেও বাকি কোড চলবে
 
   if (stock <= 0) {
     stockInfo.className = 'stock-info stock-out';
