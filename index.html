@@ -575,18 +575,7 @@ function calcTotal() {
   document.getElementById('codCharge').innerText = codCharge;
   document.getElementById('total').innerText = total;
 }
-function calcTotal() {
-  let district = document.getElementById('district');
-  let dCharge = parseInt(district.value) || 120;
-  let codCharge = Math.round(dCharge * 0.01);
-  let price = parseInt(document.getElementById('currentPrice').innerText);
-  let total = price + dCharge + codCharge;
   
-  document.getElementById('dCharge').innerText = dCharge;
-  document.getElementById('codCharge').innerText = codCharge;
-  document.getElementById('total').innerText = total;
-}
-
 function confirmOrder() {
   let name = document.getElementById('cName').value.trim();
   let phone = document.getElementById('cPhone').value.trim();
