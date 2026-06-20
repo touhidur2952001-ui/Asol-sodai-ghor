@@ -504,6 +504,13 @@
     </div>
   <script>
 let cart = [];
+let quantity = 1; 
+
+function setQty(change){ 
+  quantity = Math.max(1, quantity + change); 
+  document.getElementById('qty').innerText = quantity; 
+  calcTotal(); 
+}
 
 function updateAllStockStatus() {
   document.querySelectorAll('.card').forEach(card => {
@@ -554,8 +561,8 @@ function openPopup(btn) {
   const price = card.getAttribute('data-price');
   const name = card.getAttribute('data-name');
   
-  document.getElementById('currentPrice').innerText = price;
-  document.getElementById('productName').innerText = name;
+  document.getElementById('modalPrice').innerText = price;
+  document.getElementById('modalName').innerText = name;
   document.getElementById('deliveryPopup').style.display = 'flex';
   calcTotal();
 }
@@ -565,15 +572,18 @@ function closePopup() {
 }
 
 function calcTotal() {
-  let district = document.getElementById('district');
-  let dCharge = parseInt(district.value);
-  let codCharge = Math.round(dCharge * 0.01);
-  let price = parseInt(document.getElementById('currentPrice').innerText);
+  const area = document.querySelector('input[name="area"]:checked');
+  let dCharge = area ? parseInt(area.value) : 130;
+  let price = parseInt(document.getElementById('modalPrice').innerText);
+  let codCharge = Math.max(20, Math.round(price * 0.01));
   let total = price + dCharge + codCharge;
 
   document.getElementById('dCharge').innerText = dCharge;
-  document.getElementById('codCharge').innerText = codCharge;
+  document.getElementById('codCharge').innerText = codCharge; // এটা HTML এ যোগ করতে হবে
+  document.getElementById('subTotal').innerText = price * quantity;
+  document.getElementById('subTotal2').innerText = price * quantity;
   document.getElementById('total').innerText = total;
+  document.getElementById('btnTotal').innerText = total;
 }
   
 function confirmOrder() {
@@ -670,7 +680,7 @@ s0.parentNode.insertBefore(s1,s0);
               <button onclick="setQty(-1)" style="background:#eee; border:none; width:30px; height:30px; border-radius:4px;">−</button>
               <span id="qty" style="font-weight:600;">1</span>
               <button onclick="setQty(1)" style="background:#eee; border:none; width:30px; height:30px; border-radius:4px;">+</button>
-              <span style="margin-left:auto; font-weight:600;">৳<span id="subTotal"></span></span>
+              <span style="margin-left:auto; font-weight:600;">৳<span id="subTotal"></span>0</span>
             </div>
           </div>
         </div>
@@ -681,7 +691,7 @@ s0.parentNode.insertBefore(s1,s0);
           <span>Subtotal</span><span>৳<span id="subTotal2"></span></span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#666;">
-          <span>Delivery</span><span>৳<span id="dCharge"></span></span>
+          <span>Delivery</span><span>৳<span id="dCharge"></span>20</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-weight:700; font-size:16px; padding-top:8px; border-top:1px solid #ddd;">
           <span>Total</span><span style="color:#2e7d32;">৳<span id="total"></span></span>
@@ -691,7 +701,7 @@ s0.parentNode.insertBefore(s1,s0);
       <div style="background:white; border-radius:8px; padding:15px; margin-bottom:15px;">
         <h4 style="margin:0 0 10px 0; font-size:15px;">🚚 Delivery Area</h4>
         <label style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; cursor:pointer;">
-          <span><input type="radio" name="area" value="60" onchange="calcTotal()"> In Dinajpur</span><span>৳60</span>
+          <span><input type="radio" name="area" value="60" onchange="calcTotal()"> Savar/Dhamrai</span><span>৳60</span>
         </label>
         <label style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; cursor:pointer;">
           <span><input type="radio" name="area" value="130" onchange="calcTotal()" checked> In Dhaka</span><span>৳130</span>
