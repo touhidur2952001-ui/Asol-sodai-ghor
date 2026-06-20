@@ -527,7 +527,7 @@ function updateStockStatus(card) {
   } else {
     stockInfo.className = 'stock-info stock-available';
     stockInfo.innerText = 'স্টক: ' + stock + ' পিস';
-    btnGroup.innerHTML = '<button class="btn-add" onclick="addToCart(this)">Add to Cart</button><button class="btn-buy" onclick="openPopup('+price+', \''+name+'\')">Buy Now</button>';
+    btnGroup.innerHTML = '<button class="btn-add" onclick="addToCart(this)">Add to Cart</button><button class="btn-buy" onclick="openPopup(this)">Buy Now</button>';
   }
 }
 
@@ -549,8 +549,11 @@ function addToCart(btn) {
   document.getElementById('cartCount').innerText = cart.length;
   alert('✅ ' + name + ' কার্টে অ্যাড হইছে!');
 }
-
-function openPopup(price, name) {
+function openPopup(btn) {
+  const card = btn.closest('.card');
+  const price = card.getAttribute('data-price');
+  const name = card.getAttribute('data-name');
+  
   document.getElementById('currentPrice').innerText = price;
   document.getElementById('productName').innerText = name;
   document.getElementById('deliveryPopup').style.display = 'flex';
@@ -561,6 +564,17 @@ function closePopup() {
   document.getElementById('deliveryPopup').style.display = 'none';
 }
 
+function calcTotal() {
+  let district = document.getElementById('district');
+  let dCharge = parseInt(district.value);
+  let codCharge = Math.round(dCharge * 0.01);
+  let price = parseInt(document.getElementById('currentPrice').innerText);
+  let total = price + dCharge + codCharge;
+
+  document.getElementById('dCharge').innerText = dCharge;
+  document.getElementById('codCharge').innerText = codCharge;
+  document.getElementById('total').innerText = total;
+}
 function calcTotal() {
   let district = document.getElementById('district');
   let dCharge = parseInt(district.value) || 120;
