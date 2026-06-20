@@ -655,20 +655,32 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-                            <div id="deliveryPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-  <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:400px;">
-    <h3>ডেলিভারি তথ্য - <span id="productName"></span></h3>
-    <input id="cName" placeholder="তোমার নাম" style="width:100%; padding:10px; margin:5px 0;">
-    <input id="cPhone" placeholder="ফোন নাম্বার" style="width:100%; padding:10px; margin:5px 0;">
-    <select id="district" onchange="calcTotal()" style="width:100%; padding:10px; margin:5px 0;">
-      <option value="120">ঢাকার ভিতর - ৳120</option>
-      <option value="150">ঢাকার বাইরে - ৳150</option>
-    </select>
-    <textarea id="cAddress" placeholder="সম্পূর্ণ ঠিকানা" style="width:100%; padding:10px; margin:5px 0;"></textarea>
-    <p>পণ্য: ৳<span id="currentPrice">0</span> + ডেলিভারি: ৳<span id="dCharge">120</span> + COD: ৳<span id="codCharge">0</span> = মোট: ৳<span id="total">0</span></p>
-    <button onclick="confirmOrder()" style="background:green; color:white; padding:10px; width:100%; border:none; border-radius:5px;">WhatsApp এ অর্ডার করো</button>
-    <button onclick="closePopup()" style="background:gray; color:white; padding:10px; width:100%; border:none; border-radius:5px; margin-top:5px;">Cancel</button>
-  </div>
+<div id="deliveryPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; justify-content:center; align-items:center;"> 
+  <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:400px; position:relative;"> 
+    
+    <button onclick="closePopup()" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:24px; cursor:pointer;">×</button>
+    
+    <h3>ডেলিভারি তথ্য - <span id="productName"></span></h3> 
+    
+    <p style="margin:10px 0;">পণ্য: ৳<span id="currentPrice">0</span></p>
+    
+    <input id="cName" placeholder="তোমার নাম*" required style="width:100%; padding:10px; margin:5px 0;"> 
+    <input id="cPhone" placeholder="ফোন নাম্বার*" required pattern="01[3-9]\d{8}" style="width:100%; padding:10px; margin:5px 0;"> 
+    
+    <select id="district" onchange="calcTotal()" style="width:100%; padding:10px; margin:5px 0;"> 
+      <option value="120">ঢাকার ভিতর - ৳120</option> 
+      <option value="150">ঢাকার বাইরে - ৳150</option> 
+    </select> 
+    
+    <textarea id="cAddress" placeholder="সম্পূর্ণ ঠিকানা*" required style="width:100%; padding:10px; margin:5px 0;"></textarea> 
+    
+    <p style="margin:5px 0;">ডেলিভারি: ৳<span id="dCharge">120</span></p>
+    <p style="margin:5px 0;">COD চার্জ: ৳<span id="codCharge">0</span></p>
+    <h4 style="margin:10px 0; color:green;">মোট: ৳<span id="total">0</span></h4>
+    
+    <button onclick="confirmOrder()" style="background:green; color:white; padding:10px; width:100%; border:none; border-radius:5px; margin-top:10px;">WhatsApp এ অর্ডার করো</button> 
+    <button onclick="closePopup()" style="background:gray; color:white; padding:10px; width:100%; border:none; border-radius:5px; margin-top:5px;">Cancel</button> 
+  </div> 
 </div>
  </body>
 </html>
