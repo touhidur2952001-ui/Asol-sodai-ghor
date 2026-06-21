@@ -590,7 +590,9 @@ function confirmOrder() {
   let name = document.getElementById('cName').value.trim();
   let phone = document.getElementById('cPhone').value.trim();
   let address = document.getElementById('cAddress').value.trim();
-  let district = document.getElementById('district');
+    
+  let districtName = document.querySelector('input[name="area"]:checked').parentElement.innerText;
+    
   let districtName = district.options[district.selectedIndex].text;
   let total = document.getElementById('total').innerText;
   let productName = document.getElementById('productName').innerText;
@@ -680,19 +682,16 @@ s0.parentNode.insertBefore(s1,s0);
               <button onclick="setQty(-1)" style="background:#eee; border:none; width:30px; height:30px; border-radius:4px;">−</button>
               <span id="qty" style="font-weight:600;">1</span>
               <button onclick="setQty(1)" style="background:#eee; border:none; width:30px; height:30px; border-radius:4px;">+</button>
-              <span style="margin-left:auto; font-weight:600;">৳<span id="subTotal"></span>0</span>
+              <span style="margin-left:auto; font-weight:600;">৳<span id="subTotal"></span></span>
             </div>
           </div>
         </div>
       </div>
 
-      <div style="margin-bottom:15px; font-size:14px;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#666;">
-          <span>Subtotal</span><span>৳<span id="subTotal2"></span>0</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#666;">
-          <span>Delivery</span><span>৳<span id="dCharge"></span></span>
-        </div>
+        ‎<!-- এখানে বসাও - লাইন 712 এর নিচে -->
+‎<div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#666;">
+‎  <span>COD Charge</span><span>৳<span id="codCharge"></span></span>
+‎</div>
         <div style="display:flex; justify-content:space-between; font-weight:700; font-size:16px; padding-top:8px; border-top:1px solid #ddd;">
           <span>Total</span><span style="color:#2e7d32;">৳<span id="total"></span></span>
         </div>
