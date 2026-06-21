@@ -187,8 +187,9 @@
     <div class="price">৳ 1000</div>
 <div style="display: flex; gap: 8px; margin-top: 8px;">
   <div class="stock-info" style="flex: 1;"></div>
-  <button onclick="openPopup(this.closest('.card').dataset.name, this.closest('.card').dataset.price, this.closest('.card').dataset.img)" style="background:#28a745; color:white; padding:10px; border:none; border-radius:5px; width:100%; margin-top:10px; cursor:pointer;">Buy Now</button>
-      
+  <button onclick="toggleDetails(this)" style="background: #16a34a; color: white; padding: 4px 8px; border: none; border-radius: 8px; line-height: 1.4; font-size: 12px; font-weight: 400; cursor: pointer; flex: 1; height: 32px"> Details </button>
+</div>
+
       
 <div class="btn-group"></div>
 
@@ -655,7 +656,7 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<div id="deliveryPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center; padding:10px;">
+<div id="deliveryPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; justify-content:center; align-items:center; padding:10px;">
   <div style="background:#f8f9fa; border-radius:12px; width:100%; max-width:450px; max-height:90vh; overflow-y:auto; position:relative;">
     
     <div style="background:#e8f5e9; padding:15px 20px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:space-between;">
