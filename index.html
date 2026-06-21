@@ -187,8 +187,7 @@
     <div class="price">৳ 1000</div>
 <div style="display: flex; gap: 8px; margin-top: 8px;">
   <div class="stock-info" style="flex: 1;"></div>
-  <button onclick="toggleDetails(this)" style="background: #16a34a; color: white; padding: 4px 8px; border: none; border-radius: 8px; line-height: 1.4; font-size: 12px; font-weight: 400; cursor: pointer; flex: 1; height: 32px"> Details </button>
-</div>
+  <button onclick="openPopup(this.closest('.card').dataset.name, this.closest('.card').dataset.price, this.closest('.card').dataset.img)" style="background:#28a745; color:white; padding:10px; border:none; border-radius:5px; width:100%; margin-top:10px; cursor:pointer;">Buy Now</button>
       
       
 <div class="btn-group"></div>
