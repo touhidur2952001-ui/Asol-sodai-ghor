@@ -563,16 +563,16 @@ function closePopup() {
 }
 
 function calcTotal() {
-  const area = document.querySelector('input[name="area"]:checked');
-  let dCharge = area ? parseInt(area.value) : 130;
+  const deliveryCharge = parseInt(document.querySelector('input[name="area"]:checked').value);
   let price = parseInt(document.getElementById('modalPrice').innerText);
-  let codCharge = Math.max(20, Math.round(price * 0.01));
-  let total = price + dCharge + codCharge;
-
-  document.getElementById('dCharge').innerText = dCharge;
-  document.getElementById('codCharge').innerText = codCharge; // এটা HTML এ যোগ করতে হবে
-  document.getElementById('subTotal').innerText = price * quantity;
-  document.getElementById('subTotal2').innerText = price * quantity;
+  let qty = parseInt(document.getElementById('qty').innerText);
+  let codCharge = Math.max(20, Math.round(price * qty * 0.01));
+  let total = (price * qty) + deliveryCharge + codCharge;
+  
+  document.getElementById('dCharge').innerText = deliveryCharge;
+  document.getElementById('codCharge').innerText = codCharge;
+  document.getElementById('subTotal').innerText = price * qty;
+  document.getElementById('subTotal2').innerText = qty;
   document.getElementById('total').innerText = total;
   document.getElementById('btnTotal').innerText = total;
 }
@@ -581,8 +581,7 @@ function confirmOrder() {
   let name = document.getElementById('cName').value.trim();
   let phone = document.getElementById('cPhone').value.trim();
   let address = document.getElementById('cAddress').value.trim();
-  let district = document.getElementById('district');
-  let districtName = district.options[district.selectedIndex].text;
+  let areaName = document.querySelector('input[name="area"]:checked').parentElement.innerText;
   let total = document.getElementById('total').innerText;
   let productName = document.getElementById('productName').innerText;
 
@@ -680,10 +679,14 @@ s0.parentNode.insertBefore(s1,s0);
       <h4 style="margin:0 0 8px 0; font-size:15px;">👤 কাস্টমার ডিটেইলস</h4>
       <input type="text" id="cName" placeholder="আপনার পুরো নাম *" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; box-sizing:border-box; font-family:inherit;">
       <input type="tel" id="cPhone" placeholder="মোবাইল নাম্বার * 01XXXXXXXXX" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; box-sizing:border-box; font-family:inherit;">
-      <select id="district" onchange="calcTotal()" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; box-sizing:border-box; font-family:inherit;">
-        <option value="70">ঢাকা</option>
-        <option value="120">ঢাকার বাহিরে</option>
-      </select>
+<label style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:6px; cursor:pointer;">
+  <span><input type="radio" name="area" value="70" onchange="calcTotal()" checked> ঢাকার ভিতর</span>
+  <span style="font-weight:600;">৳70</span>
+</label>
+<label style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; border-radius:6px; cursor:pointer;">
+  <span><input type="radio" name="area" value="120" onchange="calcTotal()"> ঢাকার বাহিরে</span>
+  <span style="font-weight:600;">৳120</span>
+</label>
       <textarea id="cAddress" placeholder="সম্পূর্ণ ঠিকানা * থানা, জেলা সহ" required rows="3" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box; resize:none; font-family:inherit;"></textarea>
     </div>
 
