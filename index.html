@@ -164,13 +164,13 @@
                 <div class="category" id="organic">
             <h2 class="category-title">অর্গানিক ফুড</h2>
             <div class="products">
-              <div class="card" data-name="রাজশাহীর হিমসাগর আম" data-price="1000" data-stock="200">
+              <div class="card" data-name="রাজশাহীর হিমসাগর আম 12kg" data-price="1000" data delivery in="70" data delivery out="120" data-stock="200">
   <div style="display: flex; gap: 8px; margin-bottom: 8px;">
   <img src="himsagorkacha.jpg" alt="..." style="width: 50%; height: 200px; object-fit: cover; border-radius: 12px;">
   <img src="himsagorpaka.jpg" alt="..." style="width: 50%; height: 200px; object-fit: cover; border-radius: 12px;">
 </div>
   <div class="card-body">
-    <h3>রাজশাহীর হিমসাগর আম</h3>
+    <h3>রাজশাহীর হিমসাগর আম 12kg পার্সেল</h3>
     <p>রসে ভরা, আঁশ নাই, 100% কার্বাইড মুক্ত, 12 কেজি</p>
     <div class="price">৳ 1000</div>
 <div style="display: flex; gap: 8px; margin-top: 8px;">
@@ -547,13 +547,33 @@ function addToCart(btn) {
   document.getElementById('cartCount').innerText = cart.length;
   alert('✅ ' + name + ' কার্টে অ্যাড হইছে!');
 }
+      let currentDelIn = 70; // ডিফল্ট আমের রেট
+let currentDelOut = 120;
+
 function openPopup(btn) {
   const card = btn.closest('.card');
   const price = card.getAttribute('data-price');
   const name = card.getAttribute('data-name');
-  
+  const img = card.querySelector('img').src;
+
+  // এই 2 লাইন নতুন ✅
+  currentDelIn = parseInt(card.getAttribute('data-delivery-in'));
+  currentDelOut = parseInt(card.getAttribute('data-delivery-out'));
+
+  // Radio এর লেখা + ভ্যালু আপডেট করো
+  document.querySelector('input[name="area"][value=""]').parentElement.innerHTML =
+    `<input type="radio" name="area" value="${currentDelIn}" onchange="calcTotal()" checked> ঢাকার ভিতর</span> <span style="font-weight:600;">৳${currentDelIn}</span>`;
+
+  document.querySelectorAll('input[name="area"]')[1].parentElement.innerHTML =
+    `<input type="radio" name="area" value="${currentDelOut}" onchange="calcTotal()"> ঢাকার বাহিরে</span> <span style="font-weight:600;">৳${currentDelOut}</span>`;
+
   document.getElementById('modalPrice').innerText = price;
   document.getElementById('modalName').innerText = name;
+  document.getElementById('productName').innerText = name;
+  document.getElementById('popupImg').src = img;
+  document.getElementById('popupImg').style.display = 'block';
+  document.getElementById('qty').innerText = '1';
+
   document.getElementById('deliveryPopup').style.display = 'flex';
   calcTotal();
 }
@@ -669,6 +689,7 @@ s0.parentNode.insertBefore(s1,s0);
         <span><input type="radio" name="area" value="70" onchange="calcTotal()" checked> ঢাকার ভিতর</span>
         <span style="font-weight:600;">৳70</span>
       </label>
+
       <label style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; border-radius:6px; cursor:pointer;">
         <span><input type="radio" name="area" value="120" onchange="calcTotal()"> ঢাকার বাহিরে</span>
         <span style="font-weight:600;">৳120</span>
