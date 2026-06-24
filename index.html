@@ -195,7 +195,7 @@
     </div>
   </div>
               </div>
-                <div class="card" data-name="খাঁটি মধু" data-price="850" data-stock="0" data-img="https://via.placeholder.com/400x400.png?text=Honey">
+                <div class="card" data-name="খাঁটি মধু" data-price="850" data-stock="10" data-img="https://via.placeholder.com/400x400.png?text=Honey">
                     <img src="https://via.placeholder.com/400x400.png?text=Honey" alt="Honey">
                     <div class="card-body">
                         <h3>খাঁটি মধু</h3>
@@ -590,6 +590,7 @@ function closePopup() {
 
 function calcTotal() {
   const deliveryCharge = parseInt(document.querySelector('input[name="area"]:checked').value);
+     deliveryCharge = deliveryCharge * qty;
   let price = parseInt(document.getElementById('modalPrice').innerText);
   let qty = parseInt(document.getElementById('qty').innerText);
   let codCharge = Math.max(20, Math.round(price * qty * 0.01));
