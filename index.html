@@ -31,6 +31,18 @@
        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; transition: 0.3s; }
        .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
        .card.hide { display: none; }
+       .img-slider {
+        display: flex;          /* পাশাপাশি বসাবে */
+        gap: 8px;               /* ছবির মাঝে 8px গ্যাপ */
+        margin-bottom: 12px;
+        }
+
+   .img-slider img {
+    width: 50%;             /* 2টা ছবি = 50% 50% */
+    height: 180px;          /* উচ্চতা ফিক্সড */
+    object-fit: cover;      /* ছবি কাটবে না, ফিট হবে */
+    border-radius: 10px;
+}
        .card img { width: 100%; height: 200px; object-fit: cover; }
        .card-body { padding: 14px; }
        .card h3 { font-size: 16px; margin-bottom: 6px; }
