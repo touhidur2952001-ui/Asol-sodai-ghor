@@ -31,17 +31,7 @@
        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; transition: 0.3s; }
        .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
        .card.hide { display: none; }
-       .img-slider {
-        display: flex;          /* পাশাপাশি বসাবে */
-        gap: 8px;               /* ছবির মাঝে 8px গ্যাপ */
-        margin-bottom: 12px;
-        }
-    .img-slider img {
-    flex: 1;           /* 2টা ছবি = 50% 50% */
-    height: 180px;          /* উচ্চতা ফিক্সড */
-    object-fit: cover;      /* ছবি কাটবে না, ফিট হবে */
-    border-radius: 10px;
-    }     
+       .card img { width: 100%; height: 200px; object-fit: cover; }
        .card-body { padding: 14px; }
        .card h3 { font-size: 16px; margin-bottom: 6px; }
        .card p { color: #666; font-size: 13px; margin-bottom: 10px; min-height: 36px; }
@@ -130,10 +120,8 @@
             <h2 class="category-title">অর্গানিক ফুড</h2>
             <div class="products">
                 <div class="card" data-name="রাজশাহীর হিমসাগর আম" data-stock="50" data-price="1000" data-img="https://via.placeholder.com/400x400.png?text=Mango">
-                   <div class="img-clider">
-                       <img src="himsagorkacha.jpg" alt="হিমসাগর আম কাঁচা">
-‎                         <img src="himsagorpaka.jpg" alt="হিমসাগর আম পাকা">
-                   </div>
+                   <div> <img src="himsagorkacha.jpg" alt="হিমসাগর আম কাঁচা" style="width: 50%; height: 200px; object-fit: cover; border-radius: 8px;">
+‎                         <img src="himsagorpaka.jpg" alt="হিমসাগর আম পাকা" style="width: 50%; height: 200px; object-fit: cover; border-radius: 8px;"></div>
                     <div class="card-body">
                         <h3>রাজশাহীর হিমসাগর আম</h3>
                         <p>রসে ভরা, আঁশ নাই, 100% কার্বাইড মুক্ত, 12 কেজি</p>
